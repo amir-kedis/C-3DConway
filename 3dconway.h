@@ -21,7 +21,7 @@
 
 // ==> GAME SETTINGS
 #define GRID_SIZE 25
-#define CELL_SIZE 2.0f
+#define CELL_SIZE 10.0f
 #define CELL_COLOR 0x76ABAEFF
 
 // ==> FUNCTION PROTOTYPES

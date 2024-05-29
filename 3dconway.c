@@ -23,8 +23,10 @@ int main() {
     BeginDrawing();
     BeginMode3D(camera);
 
-    if (IsKeyPressed(KEY_DOWN))
+    if (IsKeyDown(KEY_SPACE)) {
       shiftGridDown(grid);
+      randomizeTopLayer(grid);
+    }
 
     handleCameraInput(&camera, &cameraSpherePosition);
     moveCamera(&camera, &cameraSpherePosition);
@@ -66,6 +68,10 @@ void drawGrid(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
   float y = -GRID_SIZE * CELL_SIZE / 2;
   float z = -GRID_SIZE * CELL_SIZE / 2;
 
+  DrawCubeWires((Vector3){0, 0, 0}, GRID_SIZE * CELL_SIZE,
+                GRID_SIZE * CELL_SIZE, GRID_SIZE * CELL_SIZE,
+                GetColor(0xf0f0f044));
+
   for (int i = 0; i < GRID_SIZE; i++) {
     for (int j = 0; j < GRID_SIZE; j++) {
       for (int k = 0; k < GRID_SIZE; k++) {
@@ -94,15 +100,15 @@ void shiftGridDown(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
 
 void handleCameraInput(Camera3D *cam, Vector3 *pos) {
   if (IsKeyDown(KEY_S))
-    pos->x += 5.1f * GetFrameTime();
+    pos->x += CAMERA_SPEED * CELL_SIZE * GetFrameTime();
   if (IsKeyDown(KEY_W))
-    pos->x -= 5.1f * GetFrameTime();
+    pos->x -= CAMERA_SPEED * CELL_SIZE * GetFrameTime();
   if (IsKeyDown(KEY_D))
-    pos->y -= 0.1f * GetFrameTime();
+    pos->y -= CAMERA_SPEED * GetFrameTime();
   if (IsKeyDown(KEY_A))
-    pos->y += 0.1f * GetFrameTime();
+    pos->y += CAMERA_SPEED * GetFrameTime();
   if (IsKeyDown(KEY_Q))
-    pos->z -= 0.1f * GetFrameTime();
+    pos->z -= CAMERA_SPEED * GetFrameTime();
   if (IsKeyDown(KEY_E))
-    pos->z += 0.1f * GetFrameTime();
+    pos->z += CAMERA_SPEED * GetFrameTime();
 }
