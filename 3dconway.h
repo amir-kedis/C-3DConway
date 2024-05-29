@@ -31,3 +31,5 @@ void randomizeTopLayer(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
 void handleCameraInput(Camera3D *cam, Vector3 *pos);
 void drawGrid(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
 void shiftGridDown(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
+int countNeighbors(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE], int x, int y,
+                   int z);

@@ -63,6 +63,19 @@ void randomizeTopLayer(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
       grid[x][GRID_SIZE - 1][y] = GetRandomValue(0, 1);
 }
 
+int countNeighbors(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE], int x, int y,
+                   int z) {
+  int count = 0;
+  for (int i = -1; i <= 1; i++)
+    for (int j = -1; j <= 1; j++)
+      for (int k = -1; k <= 1; k++)
+        if (x + i >= 0 && x + i < GRID_SIZE && y + j >= 0 &&
+            y + j < GRID_SIZE && z + k >= 0 && z + k < GRID_SIZE)
+          count += grid[x + i][y + j][z + k];
+  count -= grid[x][y][z];
+  return count;
+}
+
 void drawGrid(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
   float x = -GRID_SIZE * CELL_SIZE / 2;
   float y = -GRID_SIZE * CELL_SIZE / 2;
@@ -76,10 +89,15 @@ void drawGrid(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
     for (int j = 0; j < GRID_SIZE; j++) {
       for (int k = 0; k < GRID_SIZE; k++) {
         if (grid[i][j][k] == 1) {
-          DrawCube((Vector3){x, y, z}, CELL_SIZE, CELL_SIZE, CELL_SIZE,
-                   GetColor(CELL_COLOR));
+          Color col = GetColor(CELL_COLOR);
+          Vector3 colHSV = ColorToHSV(col);
+          colHSV.y = countNeighbors(grid, i, j, k) * 30;
+          col = ColorFromHSV(colHSV.x, colHSV.y, colHSV.z);
+          if (j == GRID_SIZE - 1)
+            col = RAYWHITE;
+          DrawCube((Vector3){x, y, z}, CELL_SIZE, CELL_SIZE, CELL_SIZE, col);
           DrawCubeWires((Vector3){x, y, z}, CELL_SIZE, CELL_SIZE, CELL_SIZE,
-                        BLACK);
+                        GetColor(0x000000ff));
         }
         z += CELL_SIZE;
       }
@@ -100,9 +118,9 @@ void shiftGridDown(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
 
 void handleCameraInput(Camera3D *cam, Vector3 *pos) {
   if (IsKeyDown(KEY_S))
-    pos->x += CAMERA_SPEED * CELL_SIZE * GetFrameTime();
+    pos->x += CAMERA_SPEED * CELL_SIZE * 5 * GetFrameTime();
   if (IsKeyDown(KEY_W))
-    pos->x -= CAMERA_SPEED * CELL_SIZE * GetFrameTime();
+    pos->x -= CAMERA_SPEED * CELL_SIZE * 5 * GetFrameTime();
   if (IsKeyDown(KEY_D))
     pos->y -= CAMERA_SPEED * GetFrameTime();
   if (IsKeyDown(KEY_A))
