@@ -20,9 +20,10 @@
 #define CAMERA_SPEED 1.0f
 
 // ==> GAME SETTINGS
-#define GRID_SIZE 25
+#define GRID_SIZE 30
 #define CELL_SIZE 10.0f
 #define CELL_COLOR 0x76ABAEFF
+#define SIMULATION_SPEED 0.05f
 
 // ==> FUNCTION PROTOTYPES
 void moveCamera(Camera3D *cam, Vector3 *pos);
@@ -33,3 +34,6 @@ void drawGrid(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
 void shiftGridDown(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
 int countNeighbors(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE], int x, int y,
                    int z);
+int countNeighbors2D(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE], int x, int z);
+void updateGridLayer(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
+void updateGrid(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
