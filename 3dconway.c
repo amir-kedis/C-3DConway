@@ -18,7 +18,7 @@ int main() {
 
   int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE] = {0};
 
-  int isRotating = 0;
+  int isRotating = 1;
   int isPaused = 0;
   randomizeTopLayer(grid);
 
@@ -38,6 +38,11 @@ int main() {
     if (IsKeyPressed(KEY_ENTER)) {
       isRotating = !isRotating;
     }
+
+    if (IsKeyPressed(KEY_C)) {
+      COLOR_SHIFT_TYPE = (COLOR_SHIFT_TYPE + 1) % 4;
+    }
+
     if (isRotating) {
       cameraSpherePosition.y += CAMERA_SPEED * GetFrameTime() * 0.5;
     }
@@ -145,7 +150,18 @@ void drawGrid(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
         if (grid[i][j][k] == 1) {
           Color col = GetColor(CELL_COLOR);
           Vector3 colHSV = ColorToHSV(col);
-          colHSV.y = countNeighbors(grid, i, j, k) * 30;
+          switch (COLOR_SHIFT_TYPE) {
+          case 1:
+            colHSV.x = countNeighbors(grid, i, j, k) * 30;
+            break;
+          case 2:
+            colHSV.y = countNeighbors(grid, i, j, k) * 30;
+            break;
+          case 3:
+            colHSV.z = countNeighbors(grid, i, j, k) * 30;
+            break;
+          }
+
           col = ColorFromHSV(colHSV.x, colHSV.y, colHSV.z);
           if (j == GRID_SIZE - 1)
             col = RAYWHITE;

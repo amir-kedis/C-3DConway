@@ -1,6 +1,13 @@
 /** ================================================================
  * Author: Amir Kedis
  * Description: Conway's Game of Life in 3D (2D + stack generation)
+ * CONTROLS:
+ * - WASDQE: Move camera
+ * - P: Pause simulation
+ * - R: Randomize grid
+ * - C: Change color shift type
+ * - SPACE: Step simulation
+ * - ENTER: Toggle Rotation
  * ================================================================= */
 
 // ==> INCLUDES
@@ -24,6 +31,7 @@
 #define CELL_SIZE 10.0f
 #define CELL_COLOR 0x76ABAEFF
 #define SIMULATION_SPEED 0.05f
+int COLOR_SHIFT_TYPE = 1; // 1 = hue, 2 = saturation, 3 = value
 
 // ==> FUNCTION PROTOTYPES
 void moveCamera(Camera3D *cam, Vector3 *pos);
