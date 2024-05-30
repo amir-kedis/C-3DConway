@@ -186,6 +186,7 @@ void shiftGridDown(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
 }
 
 void handleCameraInput(Camera3D *cam, Vector3 *pos) {
+  // Keyboard input WASD + QE keys to move camera
   if (IsKeyDown(KEY_S))
     pos->x += CAMERA_SPEED * CELL_SIZE * 5 * GetFrameTime();
   if (IsKeyDown(KEY_W))
@@ -198,4 +199,16 @@ void handleCameraInput(Camera3D *cam, Vector3 *pos) {
     pos->z -= CAMERA_SPEED * GetFrameTime();
   if (IsKeyDown(KEY_E))
     pos->z += CAMERA_SPEED * GetFrameTime();
+
+  // Mouse input to rotate camera
+  if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+    pos->y += GetMouseDelta().x * CAMERA_SPEED * GetFrameTime() * 0.1;
+    pos->z += -1 * GetMouseDelta().y * CAMERA_SPEED * GetFrameTime() * 0.1;
+  }
+
+  // Mouse scroll to zoom in/out
+  float scroll = GetMouseWheelMove();
+  if (scroll != 0) {
+    pos->x += -1 * scroll * CAMERA_SPEED * CELL_SIZE * 50 * GetFrameTime();
+  }
 }
