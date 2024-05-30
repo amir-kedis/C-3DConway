@@ -120,13 +120,12 @@ void updateGridLayer(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
   for (int x = 0; x < GRID_SIZE; x++)
     for (int z = 0; z < GRID_SIZE; z++) {
       int neighbors = countNeighbors2D(grid, x, z);
-      if (grid[x][GRID_SIZE - 1][z] == 1) {
-        if (neighbors < 2 || neighbors > 3)
-          grid[x][GRID_SIZE - 1][z] = 0;
-      } else {
-        if (neighbors == 3)
-          grid[x][GRID_SIZE - 1][z] = 1;
-      }
+      if (neighbors < 2)
+        grid[x][GRID_SIZE - 1][z] = 0;
+      else if (neighbors == 3)
+        grid[x][GRID_SIZE - 1][z] = 1;
+      else if (neighbors > 3)
+        grid[x][GRID_SIZE - 1][z] = 0;
     }
 }
 
