@@ -42,5 +42,5 @@ void shiftGridDown(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
 int countNeighbors(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE], int x, int y,
                    int z);
 int countNeighbors2D(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE], int x, int z);
-void updateGridLayer(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
+void updateGridLayerConway(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
 void updateGrid(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
