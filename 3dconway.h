@@ -44,3 +44,4 @@ int countNeighbors(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE], int x, int y,
 int countNeighbors2D(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE], int x, int z);
 void updateGridLayerConway(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
 void updateGrid(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]);
+void drawInstructions();

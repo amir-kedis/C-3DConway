@@ -22,6 +22,8 @@ int main() {
 
   int isRotating = 1;
   int isPaused = 0;
+  int showInstructions = 0;
+
   randomizeTopLayer(grid);
 
   double lastTime = GetTime();
@@ -43,6 +45,11 @@ int main() {
 
     if (IsKeyPressed(KEY_C)) {
       COLOR_SHIFT_TYPE = (COLOR_SHIFT_TYPE + 1) % 4;
+    }
+
+    if (IsKeyPressed(KEY_SLASH) &&
+        (IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT))) {
+      showInstructions = !showInstructions;
     }
 
     if (isRotating) {
@@ -68,6 +75,12 @@ int main() {
 
     EndMode3D();
     DrawFPS(10, 10);
+    if (showInstructions) {
+      drawInstructions();
+    }
+    int posX = GetScreenWidth() / 2 -
+               MeasureText("Press [?] to toggle instructions", 20) / 2;
+    DrawText("Press [?] to toggle instructions", posX, 15, 20, RAYWHITE);
     EndDrawing();
   }
 
@@ -149,6 +162,17 @@ void drawGrid(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
     x += CELL_SIZE;
     y = -GRID_SIZE * CELL_SIZE / 2;
   }
+}
+
+void drawInstructions() {
+  DrawText("Controls:", 10, GetScreenHeight() - 150, 25, GetColor(0xF0F0F0FF));
+  DrawText("WASD + QE | Mouse => Move Camera", 10, GetScreenHeight() - 120, 20,
+           GRAY);
+  DrawText("P => Pause", 10, GetScreenHeight() - 100, 20, GRAY);
+  DrawText("Space => Next Generation", 10, GetScreenHeight() - 80, 20, GRAY);
+  DrawText("C => Change Color Shift", 10, GetScreenHeight() - 60, 20, GRAY);
+  DrawText("Enter => Toggle Rotation", 10, GetScreenHeight() - 40, 20, GRAY);
+  DrawText("R => Randomize Grid", 10, GetScreenHeight() - 20, 20, GRAY);
 }
 
 void shiftGridDown(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
