@@ -31,7 +31,6 @@
 #define CELL_SIZE 10.0f
 #define CELL_COLOR 0x76ABAEFF
 #define SIMULATION_SPEED 0.05f
-int COLOR_SHIFT_TYPE = 1; // 1 = hue, 2 = saturation, 3 = value
 
 // ==> FUNCTION PROTOTYPES
 void moveCamera(Camera3D *cam, Vector3 *pos);

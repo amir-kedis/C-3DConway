@@ -1,6 +1,8 @@
 #include "3dconway.h"
 #include <raylib.h>
 
+int COLOR_SHIFT_TYPE = 1; // 1 = hue, 2 = saturation, 3 = value
+
 int main() {
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
@@ -72,12 +74,6 @@ int main() {
   CloseWindow();
 
   return 0;
-}
-
-void moveCamera(Camera3D *cam, Vector3 *pos) {
-  cam->position.x = pos->x * cosf(pos->y) * sinf(pos->z);
-  cam->position.y = pos->x * cosf(pos->z);
-  cam->position.z = pos->x * sinf(pos->z) * sinf(pos->y);
 }
 
 void randomizeGrid(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
@@ -183,32 +179,4 @@ void shiftGridDown(int grid[GRID_SIZE][GRID_SIZE][GRID_SIZE]) {
     for (int y = 0; y < GRID_SIZE - 1; y++)
       for (int z = 0; z < GRID_SIZE; z++)
         grid[x][y][z] = grid[x][y + 1][z];
-}
-
-void handleCameraInput(Camera3D *cam, Vector3 *pos) {
-  // Keyboard input WASD + QE keys to move camera
-  if (IsKeyDown(KEY_S))
-    pos->x += CAMERA_SPEED * CELL_SIZE * 5 * GetFrameTime();
-  if (IsKeyDown(KEY_W))
-    pos->x -= CAMERA_SPEED * CELL_SIZE * 5 * GetFrameTime();
-  if (IsKeyDown(KEY_D))
-    pos->y -= CAMERA_SPEED * GetFrameTime();
-  if (IsKeyDown(KEY_A))
-    pos->y += CAMERA_SPEED * GetFrameTime();
-  if (IsKeyDown(KEY_Q))
-    pos->z -= CAMERA_SPEED * GetFrameTime();
-  if (IsKeyDown(KEY_E))
-    pos->z += CAMERA_SPEED * GetFrameTime();
-
-  // Mouse input to rotate camera
-  if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-    pos->y += GetMouseDelta().x * CAMERA_SPEED * GetFrameTime() * 0.1;
-    pos->z += -1 * GetMouseDelta().y * CAMERA_SPEED * GetFrameTime() * 0.1;
-  }
-
-  // Mouse scroll to zoom in/out
-  float scroll = GetMouseWheelMove();
-  if (scroll != 0) {
-    pos->x += -1 * scroll * CAMERA_SPEED * CELL_SIZE * 50 * GetFrameTime();
-  }
 }
